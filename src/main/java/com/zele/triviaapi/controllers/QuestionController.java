@@ -1,14 +1,12 @@
 package com.zele.triviaapi.controllers;
 
+import com.zele.triviaapi.entities.Quiz;
 import com.zele.triviaapi.entities.api.DefaultAPIResponse;
 import com.zele.triviaapi.entities.Question;
 import com.zele.triviaapi.service.QuestionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +22,10 @@ public class QuestionController {
             @RequestParam Integer num, @RequestParam Integer cat
     ) {
         return questionService.getQuestions(num, cat);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<DefaultAPIResponse<Quiz>> getQuiz(@PathVariable String id) {
+        return questionService.getQuiz(id);
     }
 }
