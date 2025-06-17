@@ -1,6 +1,6 @@
 package com.zele.triviaapi.service;
 
-import com.zele.triviaapi.entities.DefaultAPIResponse;
+import com.zele.triviaapi.entities.api.DefaultAPIResponse;
 import com.zele.triviaapi.entities.Question;
 import org.springframework.http.ResponseEntity;
 

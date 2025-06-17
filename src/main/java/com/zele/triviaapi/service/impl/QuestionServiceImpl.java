@@ -1,9 +1,11 @@
 package com.zele.triviaapi.service.impl;
 
-import com.zele.triviaapi.entities.DefaultAPIResponse;
+import com.zele.triviaapi.entities.api.DefaultAPIResponse;
 import com.zele.triviaapi.entities.Question;
+import com.zele.triviaapi.entities.Quiz;
 import com.zele.triviaapi.entities.api.QuestionListResponse;
 import com.zele.triviaapi.mapper.QuestionMapper;
+import com.zele.triviaapi.repositories.QuizRepository;
 import com.zele.triviaapi.service.QuestionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,13 +23,15 @@ import java.util.List;
 public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionMapper questionMapper;
+    private final QuizRepository quizRepository;
     @Value("${api.base-url:https://opentdb.com/api.php}")
     private String BASE_URL;
     private final RestTemplate restTemplate;
 
-    public QuestionServiceImpl(RestTemplate restTemplate, QuestionMapper questionMapper) {
+    public QuestionServiceImpl(RestTemplate restTemplate, QuestionMapper questionMapper, QuizRepository quizRepository) {
         this.restTemplate = restTemplate;
         this.questionMapper = questionMapper;
+        this.quizRepository = quizRepository;
     }
 
     @Override
@@ -43,7 +47,8 @@ public class QuestionServiceImpl implements QuestionService {
             if (questionListResponse == null) return ResponseEntity.notFound().build();
 
             questions = questionListResponse.getResults().stream().map(questionMapper::questionResponseToQuestion).toList();
-
+            Quiz quiz = new Quiz(questions);
+            quizRepository.save(quiz);
         } catch (RestClientException ex) {
             log.error("Error calling external API at URL: {}", BASE_URL, ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

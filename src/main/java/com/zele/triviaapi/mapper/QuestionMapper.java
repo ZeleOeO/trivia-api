@@ -2,6 +2,7 @@ package com.zele.triviaapi.mapper;
 
 import com.zele.triviaapi.entities.Question;
 import com.zele.triviaapi.entities.api.QuestionResponse;
+import com.zele.triviaapi.utils.IDGenerator;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class QuestionMapper {
         answers.add(questionResponse.getCorrect_answer());
         Map<String, String> options = new HashMap<>();
         answers.forEach(answer -> options.put(String.valueOf( (char) (answers.indexOf(answer) + 'A')), answer));
+        question.setId(IDGenerator.generateQuestionID());
         question.setQuestionText(questionResponse.getQuestion());
         question.setType(questionResponse.getType());
         question.setCategory(questionResponse.getCategory());

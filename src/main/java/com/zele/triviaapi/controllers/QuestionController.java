@@ -1,6 +1,6 @@
 package com.zele.triviaapi.controllers;
 
-import com.zele.triviaapi.entities.DefaultAPIResponse;
+import com.zele.triviaapi.entities.api.DefaultAPIResponse;
 import com.zele.triviaapi.entities.Question;
 import com.zele.triviaapi.service.QuestionService;
 import lombok.AllArgsConstructor;

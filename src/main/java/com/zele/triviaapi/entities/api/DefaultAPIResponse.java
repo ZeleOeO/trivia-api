@@ -1,8 +1,7 @@
-package com.zele.triviaapi.entities;
+package com.zele.triviaapi.entities.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @Data
