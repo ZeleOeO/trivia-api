@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: trivia-db
+    environment:
+      POSTGRES_DB: trivia-db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ozonichi/trivia
+    container_name: trivia-app
+    depends_on:
+      - db
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: trivia-db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "8080:8080"
+    restart: on-failure
+
+volumes:
+  pgdata:
