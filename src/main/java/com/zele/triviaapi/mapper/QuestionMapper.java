@@ -16,9 +16,7 @@ public class QuestionMapper {
         List<String> answers = new ArrayList<>(questionResponse.getIncorrect_answers());
         answers.add(questionResponse.getCorrect_answer());
         Map<String, String> options = new HashMap<>();
-        for (String option : answers) {
-            options.put(String.valueOf((char) ('A' + option.indexOf(option))), option);
-        }
+        answers.forEach(answer -> options.put(String.valueOf( (char) (answers.indexOf(answer) + 'A')), answer));
         question.setQuestionText(questionResponse.getQuestion());
         question.setType(questionResponse.getType());
         question.setCategory(questionResponse.getCategory());
