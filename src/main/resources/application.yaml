@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: trivia-api
+
+  docker:
+    compose:
+      enabled: false
+
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:trivia-db}
+    username: ${POSTGRES_USER:user}
+    password: ${POSTGRES_PASSWORD:password}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
