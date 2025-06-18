@@ -4,6 +4,9 @@ import com.zele.triviaapi.entities.Question;
 import com.zele.triviaapi.entities.Quiz;
 import com.zele.triviaapi.entities.api.DefaultAPIResponse;
 import com.zele.triviaapi.entities.api.QuestionListResponse;
+import com.zele.triviaapi.entities.dto.Answer;
+import com.zele.triviaapi.entities.dto.AnswerRequest;
+import com.zele.triviaapi.entities.dto.AnswerResponse;
 import com.zele.triviaapi.mapper.QuestionMapper;
 import com.zele.triviaapi.repositories.QuizRepository;
 import com.zele.triviaapi.service.QuestionService;
@@ -17,6 +20,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -75,5 +79,48 @@ public class QuestionServiceImpl implements QuestionService {
             log.error("Error calling external API at URL: {}", BASE_URL, ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new DefaultAPIResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage(), null));
         }
+    }
+
+    @Override
+    public ResponseEntity<DefaultAPIResponse<AnswerResponse>> submitQuiz(AnswerRequest answerRequest) {
+        try {
+            var quiz = quizRepository.findById(answerRequest.getQuiz_id()).orElse(null);
+            if (quiz == null) {
+                log.error("Quiz with id {} not found", answerRequest.getQuiz_id());
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new DefaultAPIResponse<>(HttpStatus.NOT_FOUND.value(), "Quiz not found", null));
+            }
+            log.info("Quiz with id {} found", answerRequest.getQuiz_id());
+            log.info("Submitting quiz with id {}", answerRequest.getQuiz_id());
+            return ResponseEntity.status(HttpStatus.OK).body(solveQuiz(answerRequest,  quiz));
+        } catch (RestClientException ex) {
+            log.error("Error calling external API at URL: {}", BASE_URL, ex);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new DefaultAPIResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage(), null));
+        }
+    }
+
+    private DefaultAPIResponse<AnswerResponse> solveQuiz(AnswerRequest answerRequest, Quiz quiz) {
+        if (quiz.getQuestions().size() !=  answerRequest.getAnswers().size()) {
+            log.error("Questions and Answers do not match");
+            return new DefaultAPIResponse<>(HttpStatus.NOT_ACCEPTABLE.value(), HttpStatus.NOT_ACCEPTABLE.getReasonPhrase(), null);
+        }
+        int score = 0;
+        AnswerResponse answerResponse = new AnswerResponse();
+        answerResponse.setQuiz_id(quiz.getId());
+        answerResponse.setTotal_questions(quiz.getQuestions().size());
+        for (int i = 0; i < answerRequest.getAnswers().size(); i++) {
+            Answer answer = answerRequest.getAnswers().get(i);
+            answer.setCorrect_answer(quiz.getQuestions().get(i).getCorrectAnswer());
+            if (Objects.equals(answerRequest.getAnswers().get(i).getSelected_option(), quiz.getQuestions().get(i).getCorrectAnswer())) {
+                score++;
+                answer.setCorrect(true);
+                answerResponse.getAnswers().add(answer);
+            } else {
+                if (score>0) i--;
+                answer.setCorrect(false);
+                answerResponse.getAnswers().add(answer);
+            }
+        }
+        answerResponse.setScore(score);
+        return new DefaultAPIResponse<>(HttpStatus.OK.value(), "Success", answerResponse);
     }
 }
