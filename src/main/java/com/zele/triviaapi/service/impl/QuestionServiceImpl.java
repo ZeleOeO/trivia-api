@@ -110,12 +110,13 @@ public class QuestionServiceImpl implements QuestionService {
         for (int i = 0; i < answerRequest.getAnswers().size(); i++) {
             Answer answer = answerRequest.getAnswers().get(i);
             answer.setCorrect_answer(quiz.getQuestions().get(i).getCorrectAnswer());
-            if (Objects.equals(answerRequest.getAnswers().get(i).getSelected_option(), quiz.getQuestions().get(i).getCorrectAnswer())) {
+            String correctAnswer = quiz.getQuestions().get(i).getCorrectAnswer();
+            String userAnswer = quiz.getQuestions().get(i).getOptions().get(answerRequest.getAnswers().get(i).getSelected_option());
+            if (Objects.equals(userAnswer, correctAnswer)) {
                 score++;
                 answer.setCorrect(true);
                 answerResponse.getAnswers().add(answer);
             } else {
-                if (score>0) i--;
                 answer.setCorrect(false);
                 answerResponse.getAnswers().add(answer);
             }
