@@ -1,5 +1,6 @@
 package com.zele.triviaapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,9 @@ public class Question {
     @Column(name = "option_value")
     @CollectionTable(name = "question_options", joinColumns = @JoinColumn(name = "question_id"))
     private Map<String, String> options = new HashMap<>();
+    @JsonIgnore
+    private String correctAnswer;
+
     private String category;
     private String type;
 }

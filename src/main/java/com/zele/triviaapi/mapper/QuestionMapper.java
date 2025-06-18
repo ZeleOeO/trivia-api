@@ -20,6 +20,7 @@ public class QuestionMapper {
         answers.forEach(answer -> options.put(String.valueOf( (char) (answers.indexOf(answer) + 'A')), answer));
         question.setId(IDGenerator.generateQuestionID());
         question.setQuestionText(questionResponse.getQuestion());
+        question.setCorrectAnswer(questionResponse.getCorrect_answer());
         question.setType(questionResponse.getType());
         question.setCategory(questionResponse.getCategory());
         question.setOptions(options);
