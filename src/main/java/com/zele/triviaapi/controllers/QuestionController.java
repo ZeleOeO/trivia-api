@@ -1,8 +1,8 @@
 package com.zele.triviaapi.controllers;
 
+import com.zele.triviaapi.entities.Question;
 import com.zele.triviaapi.entities.Quiz;
 import com.zele.triviaapi.entities.api.DefaultAPIResponse;
-import com.zele.triviaapi.entities.Question;
 import com.zele.triviaapi.entities.dto.AnswerRequest;
 import com.zele.triviaapi.entities.dto.AnswerResponse;
 import com.zele.triviaapi.service.QuestionService;

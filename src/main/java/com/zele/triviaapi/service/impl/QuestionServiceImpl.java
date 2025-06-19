@@ -28,9 +28,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionMapper questionMapper;
     private final QuizRepository quizRepository;
+    private final RestTemplate restTemplate;
     @Value("${api.base-url:https://opentdb.com/api.php}")
     private String BASE_URL;
-    private final RestTemplate restTemplate;
 
     public QuestionServiceImpl(RestTemplate restTemplate, QuestionMapper questionMapper, QuizRepository quizRepository) {
         this.restTemplate = restTemplate;
@@ -54,13 +54,13 @@ public class QuestionServiceImpl implements QuestionService {
             questions = questionListResponse.getResults().stream().map(questionMapper::questionResponseToQuestion).toList();
             Quiz quiz = new Quiz(questions);
             quizRepository.save(quiz);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new DefaultAPIResponse<>(HttpStatus.OK.value(), "Success", questions)
+            );
         } catch (RestClientException ex) {
             log.error("Error calling external API at URL: {}", BASE_URL, ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new DefaultAPIResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage(), null));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new DefaultAPIResponse<>(HttpStatus.OK.value(), "Success", questions)
-        );
     }
 
     @Override
@@ -91,7 +91,7 @@ public class QuestionServiceImpl implements QuestionService {
             }
             log.info("Quiz with id {} found", answerRequest.getQuiz_id());
             log.info("Submitting quiz with id {}", answerRequest.getQuiz_id());
-            return ResponseEntity.status(HttpStatus.OK).body(solveQuiz(answerRequest,  quiz));
+            return ResponseEntity.status(HttpStatus.OK).body(solveQuiz(answerRequest, quiz));
         } catch (RestClientException ex) {
             log.error("Error calling external API at URL: {}", BASE_URL, ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new DefaultAPIResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage(), null));
@@ -99,7 +99,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     private DefaultAPIResponse<AnswerResponse> solveQuiz(AnswerRequest answerRequest, Quiz quiz) {
-        if (quiz.getQuestions().size() !=  answerRequest.getAnswers().size()) {
+        if (quiz.getQuestions().size() != answerRequest.getAnswers().size()) {
             log.error("Questions and Answers do not match");
             return new DefaultAPIResponse<>(HttpStatus.NOT_ACCEPTABLE.value(), HttpStatus.NOT_ACCEPTABLE.getReasonPhrase(), null);
         }
