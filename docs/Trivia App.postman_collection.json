@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "ab22c08c-890e-43b9-8d8b-caa805036dc6",
+		"name": "Trivia App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44390060",
+		"_collection_link": "https://osezeleoghedgebe.postman.co/workspace/Osezele-Oghedgebe's-Workspace~1d7dadef-9df4-4071-8f82-119b1a1b0fe9/collection/44390060-ab22c08c-890e-43b9-8d8b-caa805036dc6?action=share&source=collection_link&creator=44390060"
+	},
+	"item": [
+		{
+			"name": "quiz",
+			"item": [
+				{
+					"name": "submit Quiz",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"quiz_id\": \"aute sunt aliqua sit\",\n  \"answers\": [\n    {\n      \"question_id\": \"Ut dolore\",\n      \"correct\": false,\n      \"correct_answer\": \"deserunt\",\n      \"selected_option\": \"tempor ea sint\"\n    },\n    {\n      \"question_id\": \"dolor commodo minim\",\n      \"correct\": false,\n      \"correct_answer\": \"veniam tempor\",\n      \"selected_option\": \"ex qui magna\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/quiz/submit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"quiz",
+								"submit"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"quiz_id\": \"ut laboris adipisicing\",\n  \"answers\": [\n    {\n      \"question_id\": \"est veniam\",\n      \"correct\": true,\n      \"correct_answer\": \"veniam aliquip\",\n      \"selected_option\": \"est ea voluptate\"\n    },\n    {\n      \"question_id\": \"aute et ut irure\",\n      \"correct\": true,\n      \"correct_answer\": \"cupidatat esse\",\n      \"selected_option\": \"sed elit Ut reprehenderit\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/quiz/submit",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quiz",
+										"submit"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"status\": -31932224,\n  \"message\": \"Duis do in\",\n  \"data\": {\n    \"quiz_id\": \"esse dolore ea\",\n    \"score\": -78321729,\n    \"total_questions\": 84967627,\n    \"answers\": [\n      {\n        \"question_id\": \"est culpa\",\n        \"correct\": false,\n        \"correct_answer\": \"pariatur et nisi\",\n        \"selected_option\": \"officia Lorem\"\n      },\n      {\n        \"question_id\": \"quis elit\",\n        \"correct\": false,\n        \"correct_answer\": \"nisi culpa\",\n        \"selected_option\": \"voluptate cupidatat\"\n      }\n    ]\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "get Quiz",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/quiz/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"quiz",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "sit in",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/quiz/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quiz",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "sit in",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"status\": 84341817,\n  \"message\": \"irure commodo in\",\n  \"data\": {\n    \"id\": \"reprehenderit ullamco\",\n    \"questions\": [\n      {\n        \"questionText\": \"non sed dolore\",\n        \"options\": {\n          \"Duis_83\": \"dolore\"\n        },\n        \"category\": \"dolore cillum\",\n        \"type\": \"culpa fugiat\",\n        \"question_id\": \"fugiat do sed esse qui\"\n      },\n      {\n        \"questionText\": \"deserunt\",\n        \"options\": {\n          \"sunt__\": \"Excepteur in Ut\"\n        },\n        \"category\": \"incididunt eu sint\",\n        \"type\": \"veni\",\n        \"question_id\": \"in esse\"\n      }\n    ]\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "get Questions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/quiz/start?num=11773135&cat=11773135",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"quiz",
+								"start"
+							],
+							"query": [
+								{
+									"key": "num",
+									"value": "11773135",
+									"description": "(Required) "
+								},
+								{
+									"key": "cat",
+									"value": "11773135",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/quiz/start?num=11773135&cat=11773135",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"quiz",
+										"start"
+									],
+									"query": [
+										{
+											"key": "num",
+											"value": "11773135"
+										},
+										{
+											"key": "cat",
+											"value": "11773135"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"status\": 48321297,\n  \"message\": \"anim sunt\",\n  \"data\": [\n    {\n      \"questionText\": \"laboris eiusmod\",\n      \"options\": {\n        \"deserunt90\": \"dolore occaecat dolore\",\n        \"occaecatcff\": \"cupidatat tempor labo\",\n        \"pariature\": \"esse\",\n        \"proident6\": \"qui non nisi\"\n      },\n      \"category\": \"in\",\n      \"type\": \"aute adipisicing\",\n      \"question_id\": \"id velit sed magna\"\n    },\n    {\n      \"questionText\": \"do mollit\",\n      \"options\": {\n        \"voluptate_663\": \"ea\",\n        \"reprehenderit0\": \"commodo voluptate fugiat labore\",\n        \"quis_8\": \"dolore in\",\n        \"incididunt757\": \"magna laborum\",\n        \"nullab3f\": \"anim proident nisi\"\n      },\n      \"category\": \"veniam\",\n      \"type\": \"Lorem elit in voluptate\",\n      \"question_id\": \"et\"\n    }\n  ]\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
